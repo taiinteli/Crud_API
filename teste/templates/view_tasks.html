@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua Lista de Tarefas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .tasks-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            border-radius: 3px;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .add-task-button {
+            display: block;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .add-task-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="tasks-container">
+        <h2>Sua Lista de Tarefas</h2>
+        <ul>
+            {% for task in tasks %}
+            <li class="{% if task.completed %}completed{% endif %}">
+                {{ task.content }}
+            </li>
+            {% endfor %}
+        </ul>
+    <!-- Adicione este trecho de código no corpo da sua página view_tasks.html -->
+    <a href="#" id="add-task-link" class="add-task-button">Adicionar Tarefa</a>
+    <form id="add-task-form" action="/add_task" method="POST" style="display: none;">
+        <input type="text" name="task" placeholder="Nova Tarefa" required>
+        <input type="submit" value="Adicionar">
+    </form>
+    
+    <script>
+        // Adicione um evento de clique ao link âncora para mostrar o formulário
+        document.getElementById('add-task-link').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('add-task-form').style.display = 'block';
+        });
+    </script>
+    </div>
+
+</body>
+</html>

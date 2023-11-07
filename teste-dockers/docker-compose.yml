@@ -1,0 +1,27 @@
+version: '3'
+services:
+  database:
+    build:
+      context: ./database
+    container_name: teste-dockers-database
+    networks:
+      - mynetwork
+    volumes:
+      - ./data:/data
+    command: ["sqlite3", "/data/mydatabase.db", ""]
+  
+  backend:
+    build:
+      context: ./app
+    container_name: teste-dockers-backend
+    networks:
+      - mynetwork
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+    volumes:
+      - ./data:/data  # This line is added to give backend access to the database file.
+
+networks:
+  mynetwork:
